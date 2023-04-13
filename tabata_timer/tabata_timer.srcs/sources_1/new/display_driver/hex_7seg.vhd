@@ -137,7 +137,7 @@ begin
 
         when others =>
 
-          seg <= "0000000"; -- Volná
+          seg <= "1111111"; -- Prázdná cislice
 
       end case;
 

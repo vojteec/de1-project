@@ -113,7 +113,6 @@ begin
       en     => sig_en_4ms,
       rst    => rst,
       clk    => clk,
-      cnt_up => '1',
       cnt    => sig_cnt_3bit,
       def    => sig_def
     );

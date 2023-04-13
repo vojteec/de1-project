@@ -32,7 +32,6 @@ entity cnt_up_down is
     clk    : in    std_logic; --! Main clock
     rst    : in    std_logic; --! Synchronous reset
     en     : in    std_logic; --! Enable input
-    cnt_up : in    std_logic; --! Direction of the counter (1 @ UP, 0 @ DOWN)
     cnt    : out   std_logic_vector(g_CNT_WIDTH - 1 downto 0); --! Counter value
     def    : in    std_logic_vector(9 downto 0) --! Starting counter value
   );
@@ -61,12 +60,7 @@ begin
       if (rst = '1') then           -- Synchronous reset
         sig_cnt <= unsigned(def); -- Clear all bits
       elsif (en = '1') then         -- Test if counter is enabled
-        if (cnt_up = '1') then
-        -- TEST COUNTER DIRECTION HERE
-            sig_cnt <= sig_cnt + 1;
-        else
-            sig_cnt <= sig_cnt - 1;
-        end if; 
+        sig_cnt <= sig_cnt - 1;
       end if;
     end if;
 
