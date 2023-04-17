@@ -1,0 +1,16 @@
+﻿CHECKLIST:
+	driver_7seg_8digits.vhd
+		line 105
+			check
+		line 128, 176
+			spíš aby nesvítilo nic ??
+
+
+
+SIMULATION - IMPLEMENTATION VALUES:
+	driver_7seg_8digits.vhd
+		line 83/84
+			clock_enable = frekvence přepínání jednotlivých digitů
+	clock_enable.vhd
+		line 24/25/26
+			perioda signálu na výstupu (1 sekunda pro timer apod.)

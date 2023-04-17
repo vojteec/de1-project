@@ -27,20 +27,20 @@ library ieee;
 --        --/--| data1(3:0)        |
 --        --/--| data2(3:0)        |
 --        --/--| data3(3:0)        |
---          4  |           dig(3:0)|--/--
---        --/--| dp_vect(3:0)      |  4
---          4  +-------------------+
+--          4  |           dig(7:0)|--/--
+--        --/--| dp_vect(7:0)      |  8
+--          8  +-------------------+
 --
 -- Inputs:
 --   clk          -- Main clock
 --   rst          -- Synchronous reset
 --   dataX(3:0)   -- Data values for individual digits
---   dp_vect(3:0) -- Decimal points for individual digits
+--   dp_vect(7:0) -- Decimal points for individual digits
 --
 -- Outputs:
 --   dp:          -- Decimal point for specific digit
 --   seg(6:0)     -- Cathode values for individual segments
---   dig(3:0)     -- Common anode signals to individual digits
+--   dig(7:0)     -- Common anode signals to individual digits
 --
 ----------------------------------------------------------
 
@@ -59,41 +59,29 @@ entity driver_7seg_8digits is
     dp_vect : in    std_logic_vector(7 downto 0);
     dp      : out   std_logic;
     seg     : out   std_logic_vector(6 downto 0);
-    dig     : out   std_logic_vector(3 downto 0)
+    dig     : out   std_logic_vector(7 downto 0)
   );
 end entity driver_7seg_8digits;
 
-----------------------------------------------------------
--- Architecture declaration for display driver
-----------------------------------------------------------
 
 architecture behavioral of driver_7seg_8digits is
 
   -- Internal clock enable
   signal sig_en_4ms : std_logic;
-
-  -- Internal 2-bit counter for multiplexing 8 digits
-  signal sig_cnt_3bit : std_logic_vector(1 downto 0);
-
+  -- Internal 3-bit counter for multiplexing 8 digits
+  signal sig_cnt_3bit : std_logic_vector(2 downto 0);
   -- Internal 4-bit value for 7-segment decoder
   signal sig_hex : std_logic_vector(3 downto 0);
-
-  -- Internal 4-bit value for 7-segment decoder
-  signal sig_def : std_logic_vector(9 downto 0);
 
 begin
 
   --------------------------------------------------------
-  -- Instance (copy) of clock_enable entity generates
-  -- an enable pulse every 4 ms
+  -- Generating enable pulse every 4 ms
   --------------------------------------------------------
   clk_en0 : entity work.clock_enable
     generic map (
-      -- FOR SIMULATION, KEEP THIS VALUE TO 4
-      -- FOR IMPLEMENTATION, CHANGE THIS VALUE TO 400,000
-      -- 4      @ 4 ns
-      -- 400000 @ 4 ms
-      g_MAX => 400000
+      -- g_MAX => 400000  -- @ 4 ms IMPLEMENTATION
+      g_MAX => 4       -- @ 4 ns SIMULATION
     )
     port map (
       clk => clk,
@@ -102,25 +90,23 @@ begin
     );
 
   --------------------------------------------------------
-  -- Instance (copy) of cnt_up_down entity performs
-  -- a 2-bit down counter
+  -- 3-bit counter for multiplexing digits
   --------------------------------------------------------
-  bin_cnt0 : entity work.cnt_up_down
+  bin_cnt0 : entity work.counter
     generic map (
       g_CNT_WIDTH => 3
     )
     port map (
-      en     => sig_en_4ms,
-      rst    => rst,
       clk    => clk,
+      rst    => rst,
+      en     => sig_en_4ms,
       cnt_up => '1',
       cnt    => sig_cnt_3bit,
-      def    => sig_def
+      def    => (others => '0') -- "000" as alternative if doesn't work
     );
 
   --------------------------------------------------------
-  -- Instance (copy) of hex_7seg entity performs
-  -- a 7-segment display decoder
+  -- 7-segment display decoder
   --------------------------------------------------------
   hex2seg : entity work.hex_7seg
     port map (
@@ -181,6 +167,11 @@ begin
             sig_hex <= data1;
             dp      <= dp_vect(1);
             dig     <= "11111101";
+            
+          when "000" =>
+            sig_hex <= data0;
+            dp      <= dp_vect(0);
+            dig     <= "11111110";
             
           when others =>
             sig_hex <= data0;

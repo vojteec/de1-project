@@ -17,16 +17,14 @@
 
 library ieee;
   use ieee.std_logic_1164.all;
-  use ieee.numeric_std.all; -- Package for arithmetic operations
-
-----------------------------------------------------------
--- Entity declaration for clock enable
-----------------------------------------------------------
+  use ieee.numeric_std.all;
 
 entity clock_enable is
-  generic (
-    g_MAX : natural := 5 --! Number of clk pulses to generate one enable signal period
-  );                       -- Note that there IS a semicolon between generic and port sections
+  generic (  --! Number of clk pulses to generate one enable signal period
+	--! g_MAX : natural := 100000000  --! for 1 second interval
+	--! g_MAX : natural := 50000000   --! for 500 millisecond interval
+    g_MAX : natural := 5 --! SIMULATION
+  );
   port (
     clk : in    std_logic; --! Main clock
     rst : in    std_logic; --! High-active synchronous reset
@@ -34,22 +32,11 @@ entity clock_enable is
   );
 end entity clock_enable;
 
-------------------------------------------------------------
--- Architecture body for clock enable
-------------------------------------------------------------
 
 architecture behavioral of clock_enable is
-
-  -- Local counter
-  signal sig_cnt : natural;
+  signal sig_cnt : natural;  --! Local counter
 
 begin
-
-  --------------------------------------------------------
-  -- p_clk_enable:
-  -- Generate clock enable signal. By default, enable signal
-  -- is low and generated pulse is always one clock long.
-  --------------------------------------------------------
   p_clk_enable : process (clk) is
   begin
 
@@ -58,8 +45,7 @@ begin
         sig_cnt <= 0;                     -- Clear local counter
         ce      <= '0';                   -- Set output to low
 
-      -- Test number of clock periods
-      elsif (sig_cnt >= (g_MAX - 1)) then
+      elsif (sig_cnt >= (g_MAX - 1)) then -- Test number of clock periods
         sig_cnt <= 0;                     -- Clear local counter
         ce      <= '1';                   -- Generate clock enable pulse
       else
