@@ -4,6 +4,16 @@
 			check
 		line 128, 176
 			spíš aby nesvítilo nic ??
+	counter.vhd
+		line 34
+			dynamická velikost vektoru na vstupu ??
+
+
+
+
+DEC <=> BIN converter nemusí být samostatný src file:
+	dec <= TO_INTEGER(UNSIGNED(bin));
+	bin <= std_logic_vector(TO_UNSIGNED(dec, 10));
 
 
 
