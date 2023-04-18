@@ -57,8 +57,6 @@ entity driver_7seg_8digits is
     data6   : in    std_logic_vector(3 downto 0);
     data7   : in    std_logic_vector(3 downto 0);
     dp_vect : in    std_logic_vector(7 downto 0);
-    up      : in    std_logic;
-    down    : in    std_logic;
     dp      : out   std_logic;
     seg     : out   std_logic_vector(6 downto 0);
     dig     : out   std_logic_vector(3 downto 0)
@@ -70,14 +68,6 @@ end entity driver_7seg_8digits;
 ----------------------------------------------------------
 
 architecture behavioral of driver_7seg_8digits is
-
-  type t_state is (
-    LAPS,
-    LAP_TIME,
-    PAUSE_TIME
-  );
-  
-  signal sig_state : t_state;
 
   -- Internal clock enable
   signal sig_en_4ms : std_logic;
@@ -91,41 +81,8 @@ architecture behavioral of driver_7seg_8digits is
   -- Internal 4-bit value for 7-segment decoder
   signal sig_def : std_logic_vector(9 downto 0);
   
-  signal sig_button : std_logic;
-
 begin
-  
-  
-  menu : process (up, down) is
-  begin
-    when LAPS =>
-    
-        if (sig_button = up)
-          sig_state <= PAUSE_TIME;
-        elsif (sig_button = down)
-          sig_state <= LAP_TIME;
-          
-        end if;
-    
-    when LAP_TIME =>
-    
-        if (sig_button = up)
-          sig_state <= LAPS;
-        elsif (sig_button = down)
-          sig_state <= PAUSE_TIME;
-          
-        end if;
-        
-    when others =>
-    
-        if (sig_button = up)
-          sig_state <= LAP_TIME;
-        elsif (sig_button = down)
-          sig_state <= LAPS;
-          
-        end if;
-    
-  end process menu;
+
   --------------------------------------------------------
   -- Instance (copy) of clock_enable entity generates
   -- an enable pulse every 4 ms
