@@ -40,7 +40,7 @@ entity value_to_digits is
     dig5     : out   std_logic_vector(3 downto 0);
     dig6     : out   std_logic_vector(3 downto 0);
     dig7     : out   std_logic_vector(3 downto 0);
-    dp_vect  : out   std_logic_vector(7 downto 0);
+    dp_vect  : out   std_logic_vector(7 downto 0)
   );
 end entity value_to_digits;
 
