@@ -46,7 +46,7 @@ begin
 
     if rising_edge(clk) then
       if (rst = '1') then           -- Synchronous reset
-        sig_cnt <= unsigned(def);   -- Resets bits to satrting value
+        sig_cnt <= unsigned(def);   -- Resets bits to starting value
       elsif (en = '1') then         -- Test if counter is enabled
         if (cnt_up = '1') then      -- Decide direction
           sig_cnt <= sig_cnt + 1;   -- Count up

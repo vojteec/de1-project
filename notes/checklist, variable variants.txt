@@ -7,6 +7,9 @@
 	counter.vhd
 		line 34
 			dynamická velikost vektoru na vstupu ??
+	value_to_digits.vhd
+		line 99, 123
+			low active / high active ??
 
 
 
@@ -24,3 +27,22 @@ SIMULATION - IMPLEMENTATION VALUES:
 	clock_enable.vhd
 		line 24/25/26
 			perioda signálu na výstupu (1 sekunda pro timer apod.)
+	blicker.vhd
+		line ??
+			frekvence problikávání displeje
+
+
+
+
+TO DO:
+	state_to_digits.vhd
+	blicker.vhd
+	
+	vymyslet "state repeater" pro TIMER DRIVER
+	ošetření BTN_ stisku pro jediný trigger akce
+
+	timer_driver.vhd
+	menu_driver.vhd
+	top.vhd
+	
+	TESTBENCHE

@@ -23,6 +23,7 @@ entity clock_enable is
   generic (  --! Number of clk pulses to generate one enable signal period
 	--! g_MAX : natural := 100000000  --! for 1 second interval
 	--! g_MAX : natural := 50000000   --! for 500 millisecond interval
+	--! g_MAX : natural := 400000     --! for 4 millisecond interval
     g_MAX : natural := 5 --! SIMULATION
   );
   port (
