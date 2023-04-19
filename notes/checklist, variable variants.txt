@@ -11,6 +11,9 @@
 		line 99, 123
 			low active / high active ??
 	state_to_digits.vhd
+	blicker.vhd
+		DEBUG
+			dp_vect_out low active / high active ??
 
 
 
@@ -29,15 +32,13 @@ SIMULATION - IMPLEMENTATION VALUES:
 		line 24/25/26
 			perioda signálu na výstupu (1 sekunda pro timer apod.)
 	blicker.vhd
-		line ??
+		line 79/80
 			frekvence problikávání displeje
 
 
 
 
 TO DO:
-	blicker.vhd
-	
 	vymyslet "state repeater" pro TIMER DRIVER
 	ošetření BTN_ stisku pro jediný trigger akce
 
