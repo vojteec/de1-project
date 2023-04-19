@@ -113,8 +113,6 @@ begin
 	  elsif (dp_vect_in = "00000000") then
 	    if (blank = '1') then
 		  dp_vect_out(5) <= '0';
-		else
-		  dp_vect_out(5) <= '1';
 		end if;
 	
 	  -- blanking individual segments if blank is active
