@@ -78,7 +78,7 @@ begin
 	
 	
 	-- showing decimal value (= number of laps)
-	else if (val_t = '1') then
+	elsif (val_t = '1') then
 	  dig4 <= std_logic_vector(to_unsigned((int_val / 1000) mod 10, 4));
 	  dig5 <= std_logic_vector(to_unsigned((int_val / 100) mod 10, 4));
 	  dig6 <= std_logic_vector(to_unsigned((int_val / 10) mod 10, 4));
@@ -90,11 +90,11 @@ begin
 		dig5 <= "1111";
 		dig6 <= "1111";
 		
-	  else if(int_val < 100) then
+	  elsif(int_val < 100) then
 		dig4 <= "1111";
 		dig5 <= "1111";
 		
-	  else if(int_val < 1000) then
+	  elsif(int_val < 1000) then
 		dig4 <= "1111";
 	  end if;
 	  
