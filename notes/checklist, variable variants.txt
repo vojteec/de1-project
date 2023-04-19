@@ -10,6 +10,7 @@
 	value_to_digits.vhd
 		line 99, 123
 			low active / high active ??
+	state_to_digits.vhd
 
 
 
@@ -35,7 +36,6 @@ SIMULATION - IMPLEMENTATION VALUES:
 
 
 TO DO:
-	state_to_digits.vhd
 	blicker.vhd
 	
 	vymyslet "state repeater" pro TIMER DRIVER
