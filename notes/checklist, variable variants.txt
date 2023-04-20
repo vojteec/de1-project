@@ -1,16 +1,10 @@
 ﻿CHECKLIST:
 	driver_7seg_8digits.vhd
-		line 105
-			check
 		line 128, 176
 			spíš aby nesvítilo nic ??
-	counter.vhd
-		line 34
-			dynamická velikost vektoru na vstupu ??
 	value_to_digits.vhd
 		line 99, 123
 			low active / high active ??
-	state_to_digits.vhd
 	blicker.vhd
 		DEBUG
 			dp_vect_out low active / high active ??
