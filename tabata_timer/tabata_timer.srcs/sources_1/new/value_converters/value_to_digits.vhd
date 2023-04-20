@@ -34,7 +34,7 @@ library ieee;
 
 entity value_to_digits is
   port (
-    valt     : in    std_logic;
+    val_t    : in    std_logic;
     val      : in    std_logic_vector(9 downto 0);
     dig4     : out   std_logic_vector(3 downto 0);
     dig5     : out   std_logic_vector(3 downto 0);
@@ -52,7 +52,7 @@ architecture behavioral of value_to_digits is
 
 begin
 
-  p_value_to_digits : process (clk) is
+  p_value_to_digits : process (val, val_t) is
   begin
 	
 	-- showing time
@@ -62,14 +62,14 @@ begin
 	  dig5 <= std_logic_vector(to_unsigned((int_val / 60) mod 10, 4));
 	  
 	  -- subtracting displayed minutes
-	  int_val = int_val - (to_integer(unsigned(dig4)) * 600);
-	  int_val = int_val - (to_integer(unsigned(dig5)) * 60);
+	  int_val <= int_val - ((int_val / 600) mod 10) * 600;
+	  int_val <= int_val - ((int_val / 60) mod 10) * 60;
 	  
 	  dig6 <= std_logic_vector(to_unsigned((int_val / 10) mod 10, 4));
 	  dig7 <= std_logic_vector(to_unsigned((int_val) mod 10, 4));
 	  
 	  -- if on "tens of minutes" is 0 to be displayed
-	  if(dig4 = "0000") then
+	  if((int_val / 600) mod 10 = 0) then
 	  	dig4 <= "1111";       -- make it blank = don't show the redundant 0
 		    -- x16 is blank digit in our 7-seg driver
 	  end if;

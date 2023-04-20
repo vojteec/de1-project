@@ -50,27 +50,27 @@ architecture behavioral of state_to_digits is
 
 begin
 
-  p_state_to_digits : process (clk) is
+  p_state_to_digits : process (lapn, state) is
   begin
 	
 	-- showing blank display
 	if(state = 0) then
-	  dig0 <= 15;
-	  dig1 <= 15;
-	  dig2 <= 15;
-	  dig3 <= 15;
+	  dig0 <= x"15";
+	  dig1 <= x"15";
+	  dig2 <= x"15";
+	  dig3 <= x"15";
 	
 	-- showing lap number
-	elsif(state = 1 || state = 2)
-	  dig0 <= 15; -- first position BLANK
+	elsif(state = 1 OR state = 2) then
+	  dig0 <= x"15"; -- first position BLANK
 	  
 	  -- showing LAP
-	  if (state = 1)
-	    dig1 <= 11;
+	  if (state = 1) then
+	    dig1 <= x"11";
 		
 	  -- showing PAUSE
-	  elsif (state = 2)
-	    dig1 <= 12;
+	  elsif (state = 2) then
+	    dig1 <= x"12";
 		
 	  end if;
 	  
@@ -79,25 +79,25 @@ begin
 	  dig3 <= std_logic_vector(to_unsigned((lapn) mod 10, 4));
 	
 	-- showing LAP TIME
-	elsif(state = 3)
-	  dig0 <= 15; -- blank
-	  dig1 <= 11; -- L
-	  dig2 <= 13; -- t
-	  dig3 <= 15; -- blank
+	elsif(state = 3) then
+	  dig0 <= x"15"; -- blank
+	  dig1 <= x"11"; -- L
+	  dig2 <= x"13"; -- t
+	  dig3 <= x"15"; -- blank
 	
 	-- showing PAUSE TIME
-	elsif(state = 4)
-	  dig0 <= 15; -- blank
-	  dig1 <= 12; -- P
-	  dig2 <= 13; -- t
-	  dig3 <= 15; -- blank
+	elsif(state = 4) then
+	  dig0 <= x"15"; -- blank
+	  dig1 <= x"12"; -- P
+	  dig2 <= x"13"; -- t
+	  dig3 <= x"15"; -- blank
 	
 	-- showing LAP COUNT
-	elsif(state = 5)
-	  dig0 <= 11; -- L
-	  dig1 <= 10; -- A
-	  dig2 <= 12; -- P
-	  dig3 <= 14; -- S
+	elsif(state = 5) then
+	  dig0 <= x"11"; -- L
+	  dig1 <= x"10"; -- A
+	  dig2 <= x"12"; -- P
+	  dig3 <= x"14"; -- S
 	
 	end if;
 

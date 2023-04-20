@@ -120,35 +120,35 @@ begin
       elsif (blank = '1') then
 	    
 		if(bl_vect(0) = '1') then
-		  data0_out <= 15;
+		  data0_out <= x"15";
 		  dp_vect_out(0) <= '0';
 		end if;
 		if(bl_vect(1) = '1') then
-		  data1_out <= 15;
+		  data1_out <= x"15";
 		  dp_vect_out(1) <= '0';
 		end if;
 		if(bl_vect(2) = '1') then
-		  data2_out <= 15;
+		  data2_out <= x"15";
 		  dp_vect_out(2) <= '0';
 		end if;
 		if(bl_vect(3) = '1') then
-		  data3_out <= 15;
+		  data3_out <= x"15";
 		  dp_vect_out(3) <= '0';
 		end if;
 		if(bl_vect(4) = '1') then
-		  data4_out <= 15;
+		  data4_out <= x"15";
 		  dp_vect_out(4) <= '0';
 		end if;
 		if(bl_vect(5) = '1') then
-		  data5_out <= 15;
+		  data5_out <= x"15";
 		  dp_vect_out(5) <= '0';
 		end if;
 		if(bl_vect(6) = '1') then
-		  data6_out <= 15;
+		  data6_out <= x"15";
 		  dp_vect_out(6) <= '0';
 		end if;
 		if(bl_vect(7) = '1') then
-		  data7_out <= 15;
+		  data7_out <= x"15";
 		  dp_vect_out(7) <= '0';
 		end if;
 
@@ -156,7 +156,7 @@ begin
     end if;
 	
 	-- inverting 'blank status' signal every 500 ms
-	if (sig_en_500ms = '1')
+	if (sig_en_500ms = '1') then
 	  
 	  if(blank = '0') then
 		blank <= '1';
