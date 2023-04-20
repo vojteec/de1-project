@@ -72,7 +72,7 @@ architecture behavioral of driver_7seg_8digits is
   signal sig_cnt_3bit : std_logic_vector(2 downto 0);
   -- Internal 4-bit value for 7-segment decoder
   signal sig_hex : std_logic_vector(3 downto 0);
-
+  
 begin
 
   --------------------------------------------------------
