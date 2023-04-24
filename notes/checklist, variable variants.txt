@@ -8,6 +8,9 @@
 	blicker.vhd
 		DEBUG
 			dp_vect_out low active / high active ??
+	menu_driver.vhd
+		DEBUG
+		treshold uzpůsobit
 
 
 
@@ -28,16 +31,17 @@ SIMULATION - IMPLEMENTATION VALUES:
 	blicker.vhd
 		line 79/80
 			frekvence problikávání displeje
+	menu_driver.vhd
+		line 75
+			treshold pro stisk tlačítka
 
 
 
 
 TO DO:
 	vymyslet "state repeater" pro TIMER DRIVER
-	ošetření BTN_ stisku pro jediný trigger akce
 
 	timer_driver.vhd
-	menu_driver.vhd
 	top.vhd
 	
 	TESTBENCHE
