@@ -22,4 +22,6 @@ Implementace návrhu je plánována pro FPGA desku Nexys A7-50T, která nám nab
 
 ### Uživatelská příručka a návod k použití
 
+Zařízení pracuje ve dvou režimech, MENU MODE a COUNTER MODE. Pro přepínání mezi režimy použijte přepínač SWITCH 1. V režimu MENU MODE máte možnost nastavit dobu trvání kola (L t = lap time), dobu trvání odpočinku (P t = pause time) a počet kol (LAPS). Po displeji se pohybujete tlačítky BTN L/R, nastavovaná hodnota je indikována blikáním. Změna hodnoty se provádí tlačítky BTN U/D.
+
 ### Zdroje a použitá literatura
