@@ -45,3 +45,16 @@ TO DO:
 	top.vhd
 	
 	TESTBENCHE
+
+
+
+Nexys-A7-50T-Master.xdc Constraint variables:
+	SW
+	BTNC
+	BTNU
+	BTND
+	BTNL
+	BTNR
+	AN[0] ... AN[7]
+	CA ... CG
+	DP
