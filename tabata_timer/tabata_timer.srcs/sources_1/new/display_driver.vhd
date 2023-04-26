@@ -19,7 +19,6 @@ library ieee;
 entity display_driver is
   port (
     clk     : in    std_logic;   -- main clock 100 MHz
-    rst     : in    std_logic;   -- reset signal
     bl_vect : in    std_logic_vector(7 downto 0);  -- blicking segments vector
     lap_n   : in    integer;     -- number of current lap/pause
 	state   : in    integer;     -- left 4-digits state
@@ -70,10 +69,10 @@ architecture behavioral of display_driver is
         port map (
             lapn  => lap_n,
             state => state,
-            dig0  => sig_dig0,
-            dig1  => sig_dig1,
-            dig2  => sig_dig2,
-            dig3  => sig_dig3
+            dig7  => sig_dig7,
+            dig6  => sig_dig6,
+            dig5  => sig_dig5,
+            dig4  => sig_dig4
         );
         
 	-- logcial value to actual data conversion for implementation
@@ -81,10 +80,10 @@ architecture behavioral of display_driver is
         port map (
             val_t   => val_t,
             val     => num_val,
-            dig4    => sig_dig4,
-            dig5    => sig_dig5,
-            dig6    => sig_dig6,
-            dig7    => sig_dig7,
+            dig3    => sig_dig3,
+            dig2    => sig_dig2,
+            dig1    => sig_dig1,
+            dig0    => sig_dig0,
             dp_vect => sig_dp_vect
         );
         
@@ -92,7 +91,6 @@ architecture behavioral of display_driver is
     blicker : entity work.blicker
         port map (
             clk          => clk,
-            rst          => rst,
             bl_vect      => bl_vect,
             data0_in     => sig_dig0,
             data1_in     => sig_dig1,
@@ -119,7 +117,6 @@ architecture behavioral of display_driver is
     driver_7seg_8digits : entity work.driver_7seg_8digits
         port map (
             clk     => clk,
-            rst     => rst,
             data0   => sig_dig0_disp,
             data1   => sig_dig1_disp,
             data2   => sig_dig2_disp,

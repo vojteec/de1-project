@@ -18,7 +18,8 @@ library ieee;
 
 entity top is
     Port ( CLK100MHZ : in STD_LOGIC;
-           BTNC : in STD_LOGIC;
+           -- not being used yet
+		   BTNC : in STD_LOGIC;
            BTNU : in STD_LOGIC;
            BTND : in STD_LOGIC;
            BTNL : in STD_LOGIC;
@@ -80,7 +81,6 @@ begin
   display_driver : entity work.display_driver
 	port map (
 		clk         => CLK100MHZ,
-		rst         => BTNC,
 		bl_vect     => bl_vect_sig,
 		lap_n       => 0, -- to implement with timer_driver
 		state       => state_sig,

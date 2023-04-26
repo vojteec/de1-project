@@ -89,20 +89,20 @@ begin
 					case (current_option) is
 						when lap_count =>
 							current_edit <= number;
-							blicking_vector <= "11000000";
+							blicking_vector <= "00000011";
 						when others =>
 							current_edit <= second;
-							blicking_vector <= "11000000";
+							blicking_vector <= "00000011";
 					end case;
 				when minute =>
 					current_edit <= option;
-					blicking_vector <= "00001111";
+					blicking_vector <= "11110000";
 				when second =>
 					current_edit <= minute;
-					blicking_vector <= "00110000";
+					blicking_vector <= "00001100";
 				when number =>
 					current_edit <= option;
-					blicking_vector <= "00001111";
+					blicking_vector <= "11110000";
                 when others =>
                   inner_p_t <= inner_p_t;
 			end case;
@@ -147,20 +147,20 @@ begin
 					case (current_option) is
 						when lap_count =>
 							current_edit <= number;
-							blicking_vector <= "11000000";
+							blicking_vector <= "00000011";
 						when others =>
 							current_edit <= minute;
-							blicking_vector <= "00110000";
+							blicking_vector <= "00001100";
 					end case;
 				when minute =>
 					current_edit <= second;
-					blicking_vector <= "11000000";
+					blicking_vector <= "00000011";
 				when second =>
 					current_edit <= option;
-					blicking_vector <= "00001111";
+					blicking_vector <= "11110000";
 				when number =>
 					current_edit <= option;
-					blicking_vector <= "00001111";
+					blicking_vector <= "11110000";
                 when others =>
                   inner_p_t <= inner_p_t;
 			end case;

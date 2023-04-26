@@ -3,28 +3,23 @@
 		line 128, 176
 			spíš aby nesvítilo nic ??
 	value_to_digits.vhd
-		line 99, 123
-			low active / high active ??
+		
 	blicker.vhd
-		DEBUG
-			dp_vect_out low active / high active ??
+		je ok problikávání + pozice ? + time display dp ?
 	menu_driver.vhd
 		DEBUG
-		treshold uzpůsobit
 	display_driver.vhd
-		měl by být ok
-	top.vhd
-		měl by být ok
+		nezobrazuje se nastavená hodnota (+ top.vhd)
 
 
 
 SIMULATION - IMPLEMENTATION VALUES:
+	clock_enable.vhd
+		line 24/25/26
+			EXAMPLE VALUES
 	driver_7seg_8digits.vhd
 		line 83/84
 			clock_enable = frekvence přepínání jednotlivých digitů
-	clock_enable.vhd
-		line 24/25/26
-			perioda signálu na výstupu (1 sekunda pro timer apod.)
 	blicker.vhd
 		line 79/80
 			frekvence problikávání displeje

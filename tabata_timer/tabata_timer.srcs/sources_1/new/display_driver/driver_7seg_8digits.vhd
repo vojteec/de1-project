@@ -21,7 +21,7 @@ library ieee;
 --
 --             +-------------------+
 --        -----|> clk              |
---        -----| rst            dp |-----
+--        -----|                dp |-----
 --             |          seg(6:0) |--/--
 --        --/--| data0(3:0)        |  7
 --        --/--| data1(3:0)        |
@@ -33,7 +33,6 @@ library ieee;
 --
 -- Inputs:
 --   clk          -- Main clock
---   rst          -- Synchronous reset
 --   dataX(3:0)   -- Data values for individual digits
 --   dp_vect(7:0) -- Decimal points for individual digits
 --
@@ -47,7 +46,6 @@ library ieee;
 entity driver_7seg_8digits is
   port (
     clk     : in    std_logic;
-    rst     : in    std_logic;
     data0   : in    std_logic_vector(3 downto 0);
     data1   : in    std_logic_vector(3 downto 0);
     data2   : in    std_logic_vector(3 downto 0);
@@ -85,7 +83,7 @@ begin
     )
     port map (
       clk => clk,
-      rst => rst,
+      rst => '0',
       ce  => sig_en_4ms
     );
 
@@ -98,7 +96,7 @@ begin
     )
     port map (
       clk    => clk,
-      rst    => rst,
+      rst    => '0',
       en     => sig_en_4ms,
       cnt_up => '1',
       cnt    => sig_cnt_3bit,
@@ -110,7 +108,6 @@ begin
   --------------------------------------------------------
   hex2seg : entity work.hex_7seg
     port map (
-      blank => rst,
       hex   => sig_hex,
       seg   => seg
     );
@@ -125,60 +122,54 @@ begin
   begin
 
     if (rising_edge(clk)) then
-      if (rst = '1') then
-        sig_hex <= data0;
-        dp      <= dp_vect(0);
-        dig     <= "01111111";
-      else
+      case sig_cnt_3bit is
 
-        case sig_cnt_3bit is
+        when "111" =>
+          sig_hex <= data7;
+          dp      <= dp_vect(7);
+          dig     <= "01111111";
 
-          when "111" =>
-            sig_hex <= data7;
-            dp      <= dp_vect(7);
-            dig     <= "11111110";
+        when "110" =>
+          sig_hex <= data6;
+          dp      <= dp_vect(6);
+          dig     <= "10111111";
+          
+        when "101" =>
+          sig_hex <= data5;
+          dp      <= dp_vect(5);
+          dig     <= "11011111";
 
-          when "110" =>
-            sig_hex <= data6;
-            dp      <= dp_vect(6);
-            dig     <= "11111101";
-            
-          when "101" =>
-            sig_hex <= data5;
-            dp      <= dp_vect(5);
-            dig     <= "11111011";
+        when "100" =>
+          sig_hex <= data4;
+          dp      <= dp_vect(4);
+          dig     <= "11101111";
 
-          when "100" =>
-            sig_hex <= data4;
-            dp      <= dp_vect(4);
-            dig     <= "11110111";
+        when "011" =>
+          sig_hex <= data3;
+          dp      <= dp_vect(3);
+          dig     <= "11110111";
+          
+        when "010" =>
+          sig_hex <= data2;
+          dp      <= dp_vect(2);
+          dig     <= "11111011";
+          
+        when "001" =>
+          sig_hex <= data1;
+          dp      <= dp_vect(1);
+          dig     <= "11111101";
+          
+        when "000" =>
+          sig_hex <= data0;
+          dp      <= dp_vect(0);
+          dig     <= "11111110";
+          
+        when others =>
+          sig_hex <= data0;
+          dp      <= dp_vect(0);
+          dig     <= "111111110";
 
-          when "011" =>
-            sig_hex <= data3;
-            dp      <= dp_vect(3);
-            dig     <= "11101111";
-            
-          when "010" =>
-            sig_hex <= data2;
-            dp      <= dp_vect(2);
-            dig     <= "11011111";
-            
-          when "001" =>
-            sig_hex <= data1;
-            dp      <= dp_vect(1);
-            dig     <= "10111111";
-            
-          when "000" =>
-            sig_hex <= data0;
-            dp      <= dp_vect(0);
-            dig     <= "01111111";
-            
-          when others =>
-            sig_hex <= data0;
-            dp      <= dp_vect(0);
-            dig     <= "01111111";
-
-        end case;
+      end case;
 
       end if;
     end if;

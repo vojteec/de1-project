@@ -38,7 +38,6 @@ library ieee;
 entity blicker is
   port (
     clk         : in    std_logic;
-    rst         : in    std_logic;
     bl_vect     : in    std_logic_vector(7 downto 0);
     data0_in    : in    std_logic_vector(3 downto 0);
     data1_in    : in    std_logic_vector(3 downto 0);
@@ -81,7 +80,7 @@ begin
     )
     port map (
       clk => clk,
-      rst => rst,
+      rst => '0',
       ce  => sig_en_500ms
     );
 
@@ -110,7 +109,7 @@ begin
 	
 	  -- clock mode
 	  -- blicking central decimal point for clock
-	  elsif (dp_vect_in = "00000000") then
+	  elsif (bl_vect = "00000000") then
 	    if (blank = '1') then
 		  dp_vect_out(2) <= '0';
 		end if;
@@ -121,35 +120,35 @@ begin
 	    
 		if(bl_vect(7) = '1') then
 		  data7_out <= "1111";
-		  dp_vect_out(7) <= '1';
+		  dp_vect_out(7) <= '0';
 		end if;
 		if(bl_vect(6) = '1') then
 		  data6_out <= "1111";
-		  dp_vect_out(6) <= '1';
+		  dp_vect_out(6) <= '0';
 		end if;
 		if(bl_vect(5) = '1') then
 		  data5_out <= "1111";
-		  dp_vect_out(5) <= '1';
+		  dp_vect_out(5) <= '0';
 		end if;
 		if(bl_vect(4) = '1') then
 		  data4_out <= "1111";
-		  dp_vect_out(4) <= '1';
+		  dp_vect_out(4) <= '0';
 		end if;
 		if(bl_vect(3) = '1') then
 		  data3_out <= "1111";
-		  dp_vect_out(3) <= '1';
+		  dp_vect_out(3) <= '0';
 		end if;
 		if(bl_vect(2) = '1') then
 		  data2_out <= "1111";
-		  dp_vect_out(2) <= '1';
+		  dp_vect_out(2) <= '0';
 		end if;
 		if(bl_vect(1) = '1') then
 		  data1_out <= "1111";
-		  dp_vect_out(1) <= '1';
+		  dp_vect_out(1) <= '0';
 		end if;
 		if(bl_vect(0) = '1') then
 		  data0_out <= "1111";
-		  dp_vect_out(0) <= '1';
+		  dp_vect_out(0) <= '0';
 		end if;
 
       end if;
