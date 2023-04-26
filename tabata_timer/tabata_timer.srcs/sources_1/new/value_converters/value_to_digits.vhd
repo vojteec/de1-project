@@ -60,13 +60,8 @@ begin
 	
 	  dig3 <= std_logic_vector(to_unsigned((int_val / 600) mod 10, 4));
 	  dig2 <= std_logic_vector(to_unsigned((int_val / 60) mod 10, 4));
-	  
-	  -- subtracting displayed minutes
-	  int_val <= int_val - ((int_val / 600) mod 10) * 600;
-	  int_val <= int_val - ((int_val / 60) mod 10) * 60;
-	  
-	  dig1 <= std_logic_vector(to_unsigned((int_val / 10) mod 10, 4));
-	  dig0 <= std_logic_vector(to_unsigned((int_val) mod 10, 4));
+	  dig1 <= std_logic_vector(to_unsigned(((int_val - ((int_val / 600) mod 10) * 600 - ((int_val / 60) mod 10) * 60) / 10) mod 10, 4));
+	  dig0 <= std_logic_vector(to_unsigned(((int_val - ((int_val / 600) mod 10) * 600 - ((int_val / 60) mod 10) * 60)) mod 10, 4));
 	  
 	  -- if on "tens of minutes" is 0 to be displayed
 	  if((int_val / 600) mod 10 = 0) then
