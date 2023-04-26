@@ -11,13 +11,10 @@
 	menu_driver.vhd
 		DEBUG
 		treshold uzpůsobit
-
-
-
-
-DEC <=> BIN converter nemusí být samostatný src file:
-	dec <= TO_INTEGER(UNSIGNED(bin));
-	bin <= std_logic_vector(TO_UNSIGNED(dec, 10));
+	display_driver.vhd
+		měl by být ok
+	top.vhd
+		měl by být ok
 
 
 
@@ -37,12 +34,19 @@ SIMULATION - IMPLEMENTATION VALUES:
 
 
 
-
 TO DO:
 	vymyslet "state repeater" pro TIMER DRIVER
+		možná nevyužít counter.vhd a implementovat ho do driveru ?
 
 	timer_driver.vhd
+		- timer_driver itself
+		- implementace do top.vhd
+	
 	top.vhd
+		+ top itself
+		- implementace timer_driver
+		- implementace SW pro přepínání do menu
+		- implementace START/(STOP nebo PAUSE) ?
 	
 	TESTBENCHE
 
@@ -58,3 +62,7 @@ Nexys-A7-50T-Master.xdc Constraint variables:
 	AN[0] ... AN[7]
 	CA ... CG
 	DP
+
+DEC <=> BIN converter nemusí být samostatný src file:
+	dec <= TO_INTEGER(UNSIGNED(bin));
+	bin <= std_logic_vector(TO_UNSIGNED(dec, 10));
