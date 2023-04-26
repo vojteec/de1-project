@@ -32,13 +32,13 @@ entity menu_driver is
 		-- 3 -> lap time
 		-- 4 -> pause time
 		-- 5 -> lap count
-	num_val : out   std_logic_vector(9 downto 0);  -- number value
+	num_val : out   std_logic_vector(9 downto 0) := (others => '0');  -- number value
 	val_t   : out   std_logic := 0;    -- type of num_val (time / lap count)
 		-- 0 -> time value
 		-- 1 -> number value
-	l_t_o   : out   integer;      -- set lap time in seconds (16:59 MAX)
-	p_t_o   : out   integer;      -- set pause time in seconds (16:59 MAX)
-	laps_o  : out   integer       -- set lap count
+	l_t_o   : out   integer := 0;      -- set lap time in seconds (16:59 MAX)
+	p_t_o   : out   integer := 0;      -- set pause time in seconds (16:59 MAX)
+	laps_o  : out   integer := 0       -- set lap count
 );
 end entity menu_driver;
 
@@ -73,7 +73,7 @@ architecture behavioral of menu_driver is
   signal btnu_debounce_counter : integer := 0;
   signal btnd_debounce_counter : integer := 0;
   constant debounce_treshold : integer := 1000000;
-       -- 1000000 for 100 MHz clock signal equals 0.01 sec
+  -- 1000000 for 100 MHz clock signal equals 0,01 sec
   
 begin
 
