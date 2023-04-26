@@ -21,7 +21,6 @@ library ieee;
 --
 -- Inputs:
 --   clk             -- Main clock
---   rst             -- Synchronous reset
 --   bl_vect		 -- Idividual digits blicking state
 --     -- 0        -> static
 --     -- 1        -> blicking
@@ -103,13 +102,9 @@ begin
 	  data7_out <= data7_in;
 	  dp_vect_out <= dp_vect_in;
 	
-	  -- not blicking if reset
-      if (rst = '1') then
-        blank <= '0';
-	
 	  -- clock mode
 	  -- blicking central decimal point for clock
-	  elsif (bl_vect = "00000000") then
+	  if (bl_vect = "00000000") then
 	    if (blank = '1') then
 		  dp_vect_out(2) <= '0';
 		end if;
@@ -152,19 +147,19 @@ begin
 		end if;
 
       end if;
-    end if;
 	
-	-- inverting 'blank status' signal every 500 ms
-	if (sig_en_500ms = '1') then
-	  
-	  if(blank = '0') then
-		blank <= '1';
-	  
-	  elsif(blank = '1') then
-		blank <= '0';
-	  
+	  -- inverting 'blank status' signal every 500 ms
+	  if (sig_en_500ms = '1') then
+	      
+	      if(blank = '0') then
+	  	    blank <= '1';
+	      
+	      elsif(blank = '1') then
+	  	    blank <= '0';
+	      
+	      end if;
 	  end if;
-	end if;
+    end if;
 
   end process p_blicker;
 
