@@ -82,7 +82,7 @@ begin
   p_btn : process (clk) is
   begin
     if (rising_edge(clk)) then
-		-- MOVING CURSOR ONE POSITION TO THE LEFT
+		-- BTNL MOVING CURSOR ONE POSITION TO THE LEFT
 		if (btnl_pressed = '1') then
 			case (current_edit) is
 				when option =>
@@ -108,39 +108,7 @@ begin
 			end case;
 		end if;
 		
-		-- one button press = one action to do = resetting pressed status
-		btnl_pressed <= '0';
-		-- BUTTON DEBOUNCING
-		case (btnl_state) is
-			-- waiting for button input
-			when press_wait =>
-				-- goes to second state after button press
-				if(btnl = '1') then
-					btnl_state <= treshold;
-				end if;
-			-- counting press treshold
-			when treshold =>
-				if (btnl_debounce_counter = debounce_treshold) then
-					btnl_debounce_counter <= 0;
-					-- if button is still pressed then is really pressed
-					if (btnl = '1') then
-						btnl_pressed <= '1';
-					end if;
-					btnl_state <= release_wait;
-				else
-					-- counting treshold
-					btnl_debounce_counter <= btnl_debounce_counter + 1;
-				end if;
-			-- waiting for button release
-			when release_wait =>
-				if(btnl = '0') then
-					btnl_state <= press_wait;
-				end if;
-            when others =>
-              inner_p_t <= inner_p_t;
-		end case;
-		
-		-- MOVING CURSOR ONE POSITION TO THE RIGHT
+		-- BTNR MOVING CURSOR ONE POSITION TO THE RIGHT
 		if (btnr_pressed = '1') then
 			case (current_edit) is
 				when option =>
@@ -166,39 +134,7 @@ begin
 			end case;
 		end if;
 		
-		-- one button press = one action to do = reseting pressed status
-		btnr_pressed <= '0';
-		-- BUTTON DEBOUNCING
-		case (btnr_state) is
-			-- waiting for button input
-			when press_wait =>
-				-- goes to second state after button press
-				if(btnr = '1') then
-					btnr_state <= treshold;
-				end if;
-			-- counting press treshold
-			when treshold =>
-				if (btnr_debounce_counter = debounce_treshold) then
-					btnr_debounce_counter <= 0;
-					-- if button is still pressed then is really pressed
-					if (btnr = '1') then
-						btnr_pressed <= '1';
-					end if;
-					btnr_state <= release_wait;
-				else
-					-- counting treshold
-					btnr_debounce_counter <= btnr_debounce_counter + 1;
-				end if;
-			-- waiting for button release
-			when release_wait =>
-				if(btnr = '0') then
-					btnr_state <= press_wait;
-				end if;
-            when others =>
-              inner_p_t <= inner_p_t;
-		end case;
-		
-		-- INCREASING VALUE / GOING UP IN THE OPTION STATE LIST
+		-- BTNU INCREASING VALUE / GOING UP IN THE OPTION STATE LIST
 		if (btnu_pressed = '1') then
 			case (current_edit) is
 				when option =>
@@ -261,39 +197,7 @@ begin
 			end case;
 		end if;
 		
-		-- one button press = one action to do = reseting pressed status
-		btnu_pressed <= '0';
-		-- BUTTON DEBOUNCING
-		case (btnu_state) is
-			-- waiting for button input
-			when press_wait =>
-				-- goes to second state after button press
-				if(btnu = '1') then
-					btnu_state <= treshold;
-				end if;
-			-- counting press treshold
-			when treshold =>
-				if (btnu_debounce_counter = debounce_treshold) then
-					btnu_debounce_counter <= 0;
-					-- if button is still pressed then is really pressed
-					if (btnu = '1') then
-						btnu_pressed <= '1';
-					end if;
-					btnu_state <= release_wait;
-				else
-					-- counting treshold
-					btnu_debounce_counter <= btnu_debounce_counter + 1;
-				end if;
-			-- waiting for button release
-			when release_wait =>
-				if(btnu = '0') then
-					btnu_state <= press_wait;
-				end if;
-            when others =>
-              inner_p_t <= inner_p_t;
-		end case;
-		
-		-- DECREASING VALUE / GOING DOWN IN THE OPTION STATE LIST
+		-- BTND DECREASING VALUE / GOING DOWN IN THE OPTION STATE LIST
 		if (btnd_pressed = '1') then
 			case (current_edit) is
 				when option =>
@@ -356,9 +260,100 @@ begin
 			end case;
 		end if;
 		
-		-- one button press = one action to do = reseting pressed status
+		-- one button press = one action to do = resetting pressed status
+		btnl_pressed <= '0';
+		btnr_pressed <= '0';
+		btnu_pressed <= '0';
 		btnd_pressed <= '0';
-		-- BUTTON DEBOUNCING
+		
+	-- BUTTONS DEBOUNCING
+		case (btnl_state) is
+			-- waiting for button input
+			when press_wait =>
+				-- goes to second state after button press
+				if(btnl = '1') then
+					btnl_state <= treshold;
+				end if;
+			-- counting press treshold
+			when treshold =>
+				if (btnl_debounce_counter = debounce_treshold) then
+					btnl_debounce_counter <= 0;
+					-- if button is still pressed then is really pressed
+					if (btnl = '1') then
+						btnl_pressed <= '1';
+					end if;
+					btnl_state <= release_wait;
+				else
+					-- counting treshold
+					btnl_debounce_counter <= btnl_debounce_counter + 1;
+				end if;
+			-- waiting for button release
+			when release_wait =>
+				if(btnl = '0') then
+					btnl_state <= press_wait;
+				end if;
+            when others =>
+              inner_p_t <= inner_p_t;
+		end case;
+		
+		case (btnr_state) is
+			-- waiting for button input
+			when press_wait =>
+				-- goes to second state after button press
+				if(btnr = '1') then
+					btnr_state <= treshold;
+				end if;
+			-- counting press treshold
+			when treshold =>
+				if (btnr_debounce_counter = debounce_treshold) then
+					btnr_debounce_counter <= 0;
+					-- if button is still pressed then is really pressed
+					if (btnr = '1') then
+						btnr_pressed <= '1';
+					end if;
+					btnr_state <= release_wait;
+				else
+					-- counting treshold
+					btnr_debounce_counter <= btnr_debounce_counter + 1;
+				end if;
+			-- waiting for button release
+			when release_wait =>
+				if(btnr = '0') then
+					btnr_state <= press_wait;
+				end if;
+            when others =>
+              inner_p_t <= inner_p_t;
+		end case;
+		
+		case (btnu_state) is
+			-- waiting for button input
+			when press_wait =>
+				-- goes to second state after button press
+				if(btnu = '1') then
+					btnu_state <= treshold;
+				end if;
+			-- counting press treshold
+			when treshold =>
+				if (btnu_debounce_counter = debounce_treshold) then
+					btnu_debounce_counter <= 0;
+					-- if button is still pressed then is really pressed
+					if (btnu = '1') then
+						btnu_pressed <= '1';
+					end if;
+					btnu_state <= release_wait;
+				else
+					-- counting treshold
+					btnu_debounce_counter <= btnu_debounce_counter + 1;
+				end if;
+			-- waiting for button release
+			when release_wait =>
+				if(btnu = '0') then
+					btnu_state <= press_wait;
+				end if;
+            when others =>
+              inner_p_t <= inner_p_t;
+		end case;
+		
 		case (btnd_state) is
 			-- waiting for button input
 			when press_wait =>
