@@ -33,7 +33,7 @@ entity menu_driver is
 		-- 4 -> pause time
 		-- 5 -> lap count
 	num_val : out   std_logic_vector(9 downto 0) := (others => '0');  -- number value
-	val_t   : out   std_logic := 0;    -- type of num_val (time / lap count)
+	val_t   : out   std_logic := '0';    -- type of num_val (time / lap count)
 		-- 0 -> time value
 		-- 1 -> number value
 	l_t_o   : out   integer := 0;      -- set lap time in seconds (16:59 MAX)
@@ -48,8 +48,8 @@ architecture behavioral of menu_driver is
   type menu_state is (lap_time, pause_time, lap_count);
   type edit_state is (option, minute, second, number);
 -- values for navigating through the menu
-  signal current_option: menu_state := lap_time;
-  signal current_edit: edit_state := option;
+  signal current_option : menu_state := lap_time;
+  signal current_edit : edit_state := option;
 -- signals of menu values
   signal inner_l_t : integer := l_t;
   signal inner_p_t : integer := p_t;
@@ -74,11 +74,12 @@ architecture behavioral of menu_driver is
   signal btnd_debounce_counter : integer := 0;
   constant debounce_treshold : integer := 1000000;
   -- 1000000 for 100 MHz clock signal equals 0,01 sec
+  signal blicking_vector : std_logic_vector(7 downto 0) := "11110000";
   
 begin
 
   -- PROCESS MANAGING LEFT BTN FUNCTIONALITY
-  p_btn_l : process (clk) is
+  p_btn : process (clk) is
   begin
     if (rising_edge(clk)) then
 		-- MOVING CURSOR ONE POSITION TO THE LEFT
@@ -88,20 +89,22 @@ begin
 					case (current_option) is
 						when lap_count =>
 							current_edit <= number;
-							bl_vect <= "00000011";
+							blicking_vector <= "11000000";
 						when others =>
 							current_edit <= second;
-							bl_vect <= "00000011";
+							blicking_vector <= "11000000";
 					end case;
 				when minute =>
 					current_edit <= option;
-					bl_vect <= "11110000";
+					blicking_vector <= "00001111";
 				when second =>
 					current_edit <= minute;
-					bl_vect <= "00001100";
+					blicking_vector <= "00110000";
 				when number =>
 					current_edit <= option;
-					bl_vect <= "11110000";
+					blicking_vector <= "00001111";
+                when others =>
+                  inner_p_t <= inner_p_t;
 			end case;
 		end if;
 		
@@ -133,16 +136,10 @@ begin
 				if(btnl = '0') then
 					btnl_state <= press_wait;
 				end if;
+            when others =>
+              inner_p_t <= inner_p_t;
 		end case;
-    end if;
-  end process p_btn_l;
-
-
-
-  -- PROCESS MANAGING RIGHT BTN FUNCTIONALITY
-  p_btn_r : process (clk) is
-  begin
-    if (rising_edge(clk)) then
+		
 		-- MOVING CURSOR ONE POSITION TO THE RIGHT
 		if (btnr_pressed = '1') then
 			case (current_edit) is
@@ -150,20 +147,22 @@ begin
 					case (current_option) is
 						when lap_count =>
 							current_edit <= number;
-							bl_vect <= "00000011";
+							blicking_vector <= "11000000";
 						when others =>
 							current_edit <= minute;
-							bl_vect <= "00001100";
+							blicking_vector <= "00110000";
 					end case;
 				when minute =>
 					current_edit <= second;
-					bl_vect <= "00000011";
+					blicking_vector <= "11000000";
 				when second =>
 					current_edit <= option;
-					bl_vect <= "11110000";
+					blicking_vector <= "00001111";
 				when number =>
 					current_edit <= option;
-					bl_vect <= "11110000";
+					blicking_vector <= "00001111";
+                when others =>
+                  inner_p_t <= inner_p_t;
 			end case;
 		end if;
 		
@@ -195,16 +194,10 @@ begin
 				if(btnr = '0') then
 					btnr_state <= press_wait;
 				end if;
+            when others =>
+              inner_p_t <= inner_p_t;
 		end case;
-    end if;
-  end process p_btn_r;
-
-
-
-  -- PROCESS MANAGING UP BTN FUNCTIONALITY
-  p_btn_u : process (clk) is
-  begin
-    if (rising_edge(clk)) then
+		
 		-- INCREASING VALUE / GOING UP IN THE OPTION STATE LIST
 		if (btnu_pressed = '1') then
 			case (current_edit) is
@@ -225,6 +218,8 @@ begin
 							sel_st <= 4; -- pause time
 							num_val_signal <= std_logic_vector(to_unsigned(inner_p_t, 10));
 							val_t <= '0'; -- time
+						when others =>
+						  inner_p_t <= inner_p_t;
 					end case;
 				when number =>
 					if(inner_laps < 99) then
@@ -234,29 +229,35 @@ begin
 				when minute =>
 					case (current_option) is
 						when lap_time =>
-							if(inner_l_t < 900)
+							if(inner_l_t < 900) then
 								inner_l_t <= inner_l_t + 60;
 								num_val_signal <= std_logic_vector(to_unsigned(inner_l_t, 10));
 							end if;
 						when pause_time =>
-							if(inner_p_t < 900)
+							if(inner_p_t < 900) then
 								inner_p_t <= inner_p_t + 60;
 								num_val_signal <= std_logic_vector(to_unsigned(inner_p_t, 10));
 							end if;
+						when others =>
+						  inner_p_t <= inner_p_t;
 					end case;
 				when second =>
 					case (current_option) is
 						when lap_time =>
-							if(inner_l_t < 1019)
+							if(inner_l_t < 1019) then
 								inner_l_t <= inner_l_t + 1;
 								num_val_signal <= std_logic_vector(to_unsigned(inner_l_t, 10));
 							end if;
 						when pause_time =>
-							if(inner_p_t < 1019)
+							if(inner_p_t < 1019) then
 								inner_p_t <= inner_p_t + 1;
 								num_val_signal <= std_logic_vector(to_unsigned(inner_p_t, 10));
 							end if;
+						when others =>
+						  inner_p_t <= inner_p_t;
 					end case;
+                when others =>
+                  inner_p_t <= inner_p_t;
 			end case;
 		end if;
 		
@@ -288,16 +289,10 @@ begin
 				if(btnu = '0') then
 					btnu_state <= press_wait;
 				end if;
+            when others =>
+              inner_p_t <= inner_p_t;
 		end case;
-    end if;
-  end process p_btn_u;
-
-
-
-  -- PROCESS MANAGING DOWN BTN FUNCTIONALITY
-  p_btn_d : process (clk) is
-  begin
-    if (rising_edge(clk)) then
+		
 		-- DECREASING VALUE / GOING DOWN IN THE OPTION STATE LIST
 		if (btnd_pressed = '1') then
 			case (current_edit) is
@@ -318,6 +313,8 @@ begin
 							sel_st <= 3; -- lap time
 							num_val_signal <= std_logic_vector(to_unsigned(inner_l_t, 10));
 							val_t <= '0'; -- time
+						when others =>
+						  inner_p_t <= inner_p_t;
 					end case;
 				when number =>
 					if(inner_laps > 1) then
@@ -327,29 +324,35 @@ begin
 				when minute =>
 					case (current_option) is
 						when lap_time =>
-							if(inner_l_t > 60)
+							if(inner_l_t > 60) then
 								inner_l_t <= inner_l_t - 60;
 								num_val_signal <= std_logic_vector(to_unsigned(inner_l_t, 10));
 							end if;
 						when pause_time =>
-							if(inner_p_t > 60)
+							if(inner_p_t > 60) then
 								inner_p_t <= inner_p_t - 60;
 								num_val_signal <= std_logic_vector(to_unsigned(inner_p_t, 10));
 							end if;
+						when others =>
+						  inner_p_t <= inner_p_t;
 					end case;
 				when second =>
 					case (current_option) is
 						when lap_time =>
-							if(inner_l_t > 1)
+							if(inner_l_t > 1) then
 								inner_l_t <= inner_l_t - 1;
 								num_val_signal <= std_logic_vector(to_unsigned(inner_l_t, 10));
 							end if;
 						when pause_time =>
-							if(inner_p_t > 1)
+							if(inner_p_t > 1) then
 								inner_p_t <= inner_p_t - 1;
 								num_val_signal <= std_logic_vector(to_unsigned(inner_p_t, 10));
 							end if;
+						when others =>
+						  inner_p_t <= inner_p_t;
 					end case;
+                when others =>
+                  inner_p_t <= inner_p_t;
 			end case;
 		end if;
 		
@@ -381,9 +384,11 @@ begin
 				if(btnd = '0') then
 					btnd_state <= press_wait;
 				end if;
+            when others =>
+              inner_p_t <= inner_p_t;
 		end case;
     end if;
-  end process p_btn_d;
+  end process p_btn;
   
   -- output number value from signal
   num_val <= num_val_signal;
@@ -391,5 +396,6 @@ begin
   l_t_o <= inner_l_t;
   p_t_o <= inner_p_t;
   laps_o <= inner_laps;
+  bl_vect <= blicking_vector;
 
 end architecture behavioral;

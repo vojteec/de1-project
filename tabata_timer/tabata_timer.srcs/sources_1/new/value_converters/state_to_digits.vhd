@@ -55,22 +55,22 @@ begin
 	
 	-- showing blank display
 	if(state = 0) then
-	  dig0 <= x"15";
-	  dig1 <= x"15";
-	  dig2 <= x"15";
-	  dig3 <= x"15";
+	  dig0 <= "1111";
+	  dig1 <= "1111";
+	  dig2 <= "1111";
+	  dig3 <= "1111";
 	
 	-- showing lap number
 	elsif(state = 1 OR state = 2) then
-	  dig0 <= x"15"; -- first position BLANK
+	  dig0 <= "1111"; -- first position BLANK
 	  
 	  -- showing LAP
 	  if (state = 1) then
-	    dig1 <= x"11";
+	    dig1 <= "1011";
 		
 	  -- showing PAUSE
 	  elsif (state = 2) then
-	    dig1 <= x"12";
+	    dig1 <= "1100";
 		
 	  end if;
 	  
@@ -80,24 +80,24 @@ begin
 	
 	-- showing LAP TIME
 	elsif(state = 3) then
-	  dig0 <= x"15"; -- blank
-	  dig1 <= x"11"; -- L
-	  dig2 <= x"13"; -- t
-	  dig3 <= x"15"; -- blank
+	  dig0 <= "1111"; -- blank
+	  dig1 <= "1011"; -- L
+	  dig2 <= "1101"; -- t
+	  dig3 <= "1111"; -- blank
 	
 	-- showing PAUSE TIME
 	elsif(state = 4) then
-	  dig0 <= x"15"; -- blank
-	  dig1 <= x"12"; -- P
-	  dig2 <= x"13"; -- t
-	  dig3 <= x"15"; -- blank
+	  dig0 <= "1111"; -- blank
+	  dig1 <= "1100"; -- P
+	  dig2 <= "1101"; -- t
+	  dig3 <= "1111"; -- blank
 	
 	-- showing LAP COUNT
 	elsif(state = 5) then
-	  dig0 <= x"11"; -- L
-	  dig1 <= x"10"; -- A
-	  dig2 <= x"12"; -- P
-	  dig3 <= x"14"; -- S
+	  dig0 <= "1011"; -- L
+	  dig1 <= "1010"; -- A
+	  dig2 <= "1100"; -- P
+	  dig3 <= "1110"; -- S
 	
 	end if;
 

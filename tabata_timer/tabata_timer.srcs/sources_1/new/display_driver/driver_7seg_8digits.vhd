@@ -80,8 +80,8 @@ begin
   --------------------------------------------------------
   clk_en0 : entity work.clock_enable
     generic map (
-      -- g_MAX => 400000  -- @ 4 ms IMPLEMENTATION
-      g_MAX => 4       -- @ 4 ns SIMULATION
+       g_MAX => 200000  -- @ 2 ms IMPLEMENTATION
+      --g_MAX => 4       -- @ 4 ns SIMULATION
     )
     port map (
       clk => clk,
@@ -128,7 +128,7 @@ begin
       if (rst = '1') then
         sig_hex <= data0;
         dp      <= dp_vect(0);
-        dig     <= "11111110";
+        dig     <= "01111111";
       else
 
         case sig_cnt_3bit is
@@ -136,47 +136,47 @@ begin
           when "111" =>
             sig_hex <= data7;
             dp      <= dp_vect(7);
-            dig     <= "01111111";
+            dig     <= "11111110";
 
           when "110" =>
             sig_hex <= data6;
             dp      <= dp_vect(6);
-            dig     <= "10111111";
+            dig     <= "11111101";
             
           when "101" =>
             sig_hex <= data5;
             dp      <= dp_vect(5);
-            dig     <= "11011111";
+            dig     <= "11111011";
 
           when "100" =>
             sig_hex <= data4;
             dp      <= dp_vect(4);
-            dig     <= "11101111";
+            dig     <= "11110111";
 
           when "011" =>
             sig_hex <= data3;
             dp      <= dp_vect(3);
-            dig     <= "11110111";
+            dig     <= "11101111";
             
           when "010" =>
             sig_hex <= data2;
             dp      <= dp_vect(2);
-            dig     <= "11111011";
+            dig     <= "11011111";
             
           when "001" =>
             sig_hex <= data1;
             dp      <= dp_vect(1);
-            dig     <= "11111101";
+            dig     <= "10111111";
             
           when "000" =>
             sig_hex <= data0;
             dp      <= dp_vect(0);
-            dig     <= "11111110";
+            dig     <= "01111111";
             
           when others =>
             sig_hex <= data0;
             dp      <= dp_vect(0);
-            dig     <= "11111110";
+            dig     <= "01111111";
 
         end case;
 

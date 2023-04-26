@@ -76,8 +76,8 @@ begin
   --------------------------------------------------------
   clk_en0 : entity work.clock_enable
     generic map (
-      -- g_MAX => 50000000  -- @ 500 ms IMPLEMENTATION
-      g_MAX => 4       -- @ 4 ns SIMULATION
+       g_MAX => 50000000  -- @ 500 ms IMPLEMENTATION
+      --g_MAX => 4       -- @ 4 ns SIMULATION
     )
     port map (
       clk => clk,
@@ -112,44 +112,44 @@ begin
 	  -- blicking central decimal point for clock
 	  elsif (dp_vect_in = "00000000") then
 	    if (blank = '1') then
-		  dp_vect_out(5) <= '0';
+		  dp_vect_out(2) <= '0';
 		end if;
 	
 	  -- blanking individual segments if blank is active
 	  -- if (blank = '0') then we keep the default values
       elsif (blank = '1') then
 	    
-		if(bl_vect(0) = '1') then
-		  data0_out <= x"15";
-		  dp_vect_out(0) <= '0';
-		end if;
-		if(bl_vect(1) = '1') then
-		  data1_out <= x"15";
-		  dp_vect_out(1) <= '0';
-		end if;
-		if(bl_vect(2) = '1') then
-		  data2_out <= x"15";
-		  dp_vect_out(2) <= '0';
-		end if;
-		if(bl_vect(3) = '1') then
-		  data3_out <= x"15";
-		  dp_vect_out(3) <= '0';
-		end if;
-		if(bl_vect(4) = '1') then
-		  data4_out <= x"15";
-		  dp_vect_out(4) <= '0';
-		end if;
-		if(bl_vect(5) = '1') then
-		  data5_out <= x"15";
-		  dp_vect_out(5) <= '0';
+		if(bl_vect(7) = '1') then
+		  data7_out <= "1111";
+		  dp_vect_out(7) <= '1';
 		end if;
 		if(bl_vect(6) = '1') then
-		  data6_out <= x"15";
-		  dp_vect_out(6) <= '0';
+		  data6_out <= "1111";
+		  dp_vect_out(6) <= '1';
 		end if;
-		if(bl_vect(7) = '1') then
-		  data7_out <= x"15";
-		  dp_vect_out(7) <= '0';
+		if(bl_vect(5) = '1') then
+		  data5_out <= "1111";
+		  dp_vect_out(5) <= '1';
+		end if;
+		if(bl_vect(4) = '1') then
+		  data4_out <= "1111";
+		  dp_vect_out(4) <= '1';
+		end if;
+		if(bl_vect(3) = '1') then
+		  data3_out <= "1111";
+		  dp_vect_out(3) <= '1';
+		end if;
+		if(bl_vect(2) = '1') then
+		  data2_out <= "1111";
+		  dp_vect_out(2) <= '1';
+		end if;
+		if(bl_vect(1) = '1') then
+		  data1_out <= "1111";
+		  dp_vect_out(1) <= '1';
+		end if;
+		if(bl_vect(0) = '1') then
+		  data0_out <= "1111";
+		  dp_vect_out(0) <= '1';
 		end if;
 
       end if;
