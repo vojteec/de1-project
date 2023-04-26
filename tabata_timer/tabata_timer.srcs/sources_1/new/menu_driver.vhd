@@ -160,19 +160,19 @@ begin
 				when number =>
 					if(inner_laps < 99) then
 						inner_laps <= inner_laps + 1;
-						num_val_signal <= std_logic_vector(to_unsigned(inner_laps, 10));
+						num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) + 1);
 					end if;
 				when minute =>
 					case (current_option) is
 						when lap_time =>
 							if(inner_l_t < 900) then
 								inner_l_t <= inner_l_t + 60;
-								num_val_signal <= std_logic_vector(to_unsigned(inner_l_t, 10));
+								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) + 60);
 							end if;
 						when pause_time =>
 							if(inner_p_t < 900) then
 								inner_p_t <= inner_p_t + 60;
-								num_val_signal <= std_logic_vector(to_unsigned(inner_p_t, 10));
+								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) + 60);
 							end if;
 						when others =>
 						  inner_p_t <= inner_p_t;
@@ -182,12 +182,12 @@ begin
 						when lap_time =>
 							if(inner_l_t < 1019) then
 								inner_l_t <= inner_l_t + 1;
-								num_val_signal <= std_logic_vector(to_unsigned(inner_l_t, 10));
+								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) + 1);
 							end if;
 						when pause_time =>
 							if(inner_p_t < 1019) then
 								inner_p_t <= inner_p_t + 1;
-								num_val_signal <= std_logic_vector(to_unsigned(inner_p_t, 10));
+								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) + 1);
 							end if;
 						when others =>
 						  inner_p_t <= inner_p_t;
@@ -223,19 +223,19 @@ begin
 				when number =>
 					if(inner_laps > 1) then
 						inner_laps <= inner_laps - 1;
-						num_val_signal <= std_logic_vector(to_unsigned(inner_laps, 10));
+						num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) - 1);
 					end if;
 				when minute =>
 					case (current_option) is
 						when lap_time =>
 							if(inner_l_t > 60) then
 								inner_l_t <= inner_l_t - 60;
-								num_val_signal <= std_logic_vector(to_unsigned(inner_l_t, 10));
+								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) - 60);
 							end if;
 						when pause_time =>
 							if(inner_p_t > 60) then
 								inner_p_t <= inner_p_t - 60;
-								num_val_signal <= std_logic_vector(to_unsigned(inner_p_t, 10));
+								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) - 60);
 							end if;
 						when others =>
 						  inner_p_t <= inner_p_t;
@@ -245,12 +245,12 @@ begin
 						when lap_time =>
 							if(inner_l_t > 1) then
 								inner_l_t <= inner_l_t - 1;
-								num_val_signal <= std_logic_vector(to_unsigned(inner_l_t, 10));
+								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) - 1);
 							end if;
 						when pause_time =>
 							if(inner_p_t > 1) then
 								inner_p_t <= inner_p_t - 1;
-								num_val_signal <= std_logic_vector(to_unsigned(inner_p_t, 10));
+								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) - 1);
 							end if;
 						when others =>
 						  inner_p_t <= inner_p_t;
