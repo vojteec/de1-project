@@ -24,7 +24,7 @@ library ieee;
 --   bl_vect		 -- Idividual digits blicking state
 --     -- 0        -> static
 --     -- 1        -> blicking
---     -- 00000000 -> clock mode (only central clock dp blicking)
+--     -- 11111111 -> clock mode (only central clock dp blicking)
 --   dataX_in(3:0)   -- Input data values for individual digits
 --   dp_vect_in(7:0) -- Input decimal points for individual digits
 --
@@ -104,7 +104,7 @@ begin
 	
 	  -- clock mode
 	  -- blicking central decimal point for clock
-	  if (bl_vect = "00000000") then
+	  if (bl_vect = "11111111") then
 	    if (blank = '1') then
 		  dp_vect_out(2) <= '0';
 		end if;
