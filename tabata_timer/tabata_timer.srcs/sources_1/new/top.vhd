@@ -18,14 +18,12 @@ library ieee;
 
 entity top is
     Port ( CLK100MHZ : in STD_LOGIC;
-           -- not being used yet
 		   BTNC : in STD_LOGIC;
            BTNU : in STD_LOGIC;
            BTND : in STD_LOGIC;
            BTNL : in STD_LOGIC;
            BTNR : in STD_LOGIC;
-		   -- to implement / menu-timer switch
-           --SW   : in STD_LOGIC;
+           SW   : in STD_LOGIC;
            CA   : out STD_LOGIC;
            CB   : out STD_LOGIC;
            CC   : out STD_LOGIC;
@@ -52,15 +50,27 @@ architecture behavioral of top is
   signal ret_laps : integer := 5;
   
   -- signals for display_driver inputs from menu and timer driver
+  signal menu_bl_vect_sig : std_logic_vector(7 downto 0) := (others => '0');
+  signal menu_state_sig   : integer := 1;
+  signal menu_value_sig   : std_logic_vector(9 downto 0) := (others => '0');
+  signal menu_val_t_sig   : std_logic := '0';
+  signal timer_bl_vect_sig : std_logic_vector(7 downto 0) := (others => '0');
+  signal timer_state_sig   : integer := 1;
+  signal timer_value_sig   : std_logic_vector(9 downto 0) := (others => '0');
+  signal timer_val_t_sig   : std_logic := '0';
   signal bl_vect_sig : std_logic_vector(7 downto 0) := (others => '0');
   signal state_sig   : integer := 1;
   signal value_sig   : std_logic_vector(9 downto 0) := (others => '0');
   signal val_t_sig   : std_logic := '0';
+  signal lap_n_sig   : integer := 1;
+  signal timer_en   : std_logic := '1';
+  signal menu_en   : std_logic := '0';
 
 begin
 
   menu_driver : entity work.menu_driver
 	port map (
+	    enable   => menu_en,
 		clk      => CLK100MHZ,
 		l_t      => local_l_t,
 		p_t      => local_p_t,
@@ -69,20 +79,57 @@ begin
 		btnr     => BTNR,
 		btnu     => BTNU,
 		btnd     => BTND,
-		bl_vect  => bl_vect_sig,
-		sel_st   => state_sig,
-		num_val  => value_sig,
-		val_t    => val_t_sig,
+		bl_vect  => menu_bl_vect_sig,
+		sel_st   => menu_state_sig,
+		num_val  => menu_value_sig,
+		val_t    => menu_val_t_sig,
 		l_t_o    => ret_l_t,
 		p_t_o    => ret_p_t,
 		laps_o   => ret_laps
 	);
 	
+  timer_driver : entity work.timer_driver
+	port map (
+	    enable   => timer_en,
+		clk      => CLK100MHZ,
+		--l_t      => local_l_t,
+		--p_t      => local_p_t,
+		--laps     => local_laps,
+		l_t      => 75,
+		p_t      => 15,
+		laps     => 3,
+		btnc     => BTNC,
+		lap_n    => lap_n_sig,
+		bl_vect  => timer_bl_vect_sig,
+		sel_st   => timer_state_sig,
+		num_val  => timer_value_sig,
+		val_t    => timer_val_t_sig
+	);
+	
+  mode_switch : entity work.mode_switch
+    port map (
+        switch_button => SW,
+		menu_bl_vect  => menu_bl_vect_sig,
+		menu_sel_st   => menu_state_sig,
+		menu_num_val  => menu_value_sig,
+		menu_val_t    => menu_val_t_sig,
+		timer_bl_vect => timer_bl_vect_sig,
+		timer_sel_st  => timer_state_sig,
+		timer_num_val => timer_value_sig,
+		timer_val_t   => timer_val_t_sig,
+		bl_vect => bl_vect_sig,
+		sel_st  => state_sig,
+		num_val => value_sig,
+		val_t   => val_t_sig,
+		timer_enable => timer_en,
+		menu_enable => menu_en
+    );
+	
   display_driver : entity work.display_driver
 	port map (
 		clk         => CLK100MHZ,
 		bl_vect     => bl_vect_sig,
-		lap_n       => 0, -- to implement with timer_driver
+		lap_n       => lap_n_sig,
 		state       => state_sig,
 		num_val     => value_sig,
 		val_t       => val_t_sig,

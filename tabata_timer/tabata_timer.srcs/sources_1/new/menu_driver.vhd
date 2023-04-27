@@ -18,6 +18,7 @@ library ieee;
 
 entity menu_driver is
   port (
+    enable  : in    std_logic;   -- switcher between menu and timer mode
     clk     : in    std_logic;   -- counter for managing push button treshold
     l_t     : in    integer;     -- stored lap time in seconds
     p_t     : in    integer;     -- stored pause time in seconds
@@ -81,7 +82,7 @@ begin
   -- PROCESS MANAGING LEFT BTN FUNCTIONALITY
   p_btn : process (clk) is
   begin
-    if (rising_edge(clk)) then
+    if (rising_edge(clk) AND enable = '1') then
 		-- BTNL MOVING CURSOR ONE POSITION TO THE LEFT
 		if (btnl_pressed = '1') then
 			case (current_edit) is
@@ -160,19 +161,19 @@ begin
 				when number =>
 					if(inner_laps < 99) then
 						inner_laps <= inner_laps + 1;
-						num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) + 1);
+						num_val_signal <= std_logic_vector(unsigned(num_val_signal) + 1);
 					end if;
 				when minute =>
 					case (current_option) is
 						when lap_time =>
 							if(inner_l_t < 900) then
 								inner_l_t <= inner_l_t + 60;
-								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) + 60);
+								num_val_signal <= std_logic_vector(unsigned(num_val_signal) + 60);
 							end if;
 						when pause_time =>
 							if(inner_p_t < 900) then
 								inner_p_t <= inner_p_t + 60;
-								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) + 60);
+								num_val_signal <= std_logic_vector(unsigned(num_val_signal) + 60);
 							end if;
 						when others =>
 						  inner_p_t <= inner_p_t;
@@ -182,12 +183,12 @@ begin
 						when lap_time =>
 							if(inner_l_t < 1019) then
 								inner_l_t <= inner_l_t + 1;
-								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) + 1);
+								num_val_signal <= std_logic_vector(unsigned(num_val_signal) + 1);
 							end if;
 						when pause_time =>
 							if(inner_p_t < 1019) then
 								inner_p_t <= inner_p_t + 1;
-								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) + 1);
+								num_val_signal <= std_logic_vector(unsigned(num_val_signal) + 1);
 							end if;
 						when others =>
 						  inner_p_t <= inner_p_t;
@@ -223,19 +224,19 @@ begin
 				when number =>
 					if(inner_laps > 1) then
 						inner_laps <= inner_laps - 1;
-						num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) - 1);
+						num_val_signal <= std_logic_vector(unsigned(num_val_signal) - 1);
 					end if;
 				when minute =>
 					case (current_option) is
 						when lap_time =>
 							if(inner_l_t > 60) then
 								inner_l_t <= inner_l_t - 60;
-								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) - 60);
+								num_val_signal <= std_logic_vector(unsigned(num_val_signal) - 60);
 							end if;
 						when pause_time =>
 							if(inner_p_t > 60) then
 								inner_p_t <= inner_p_t - 60;
-								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) - 60);
+								num_val_signal <= std_logic_vector(unsigned(num_val_signal) - 60);
 							end if;
 						when others =>
 						  inner_p_t <= inner_p_t;
@@ -245,12 +246,12 @@ begin
 						when lap_time =>
 							if(inner_l_t > 1) then
 								inner_l_t <= inner_l_t - 1;
-								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) - 1);
+								num_val_signal <= std_logic_vector(unsigned(num_val_signal) - 1);
 							end if;
 						when pause_time =>
 							if(inner_p_t > 1) then
 								inner_p_t <= inner_p_t - 1;
-								num_val_signal <= std_logic_vector(to_unsigned(num_val_signal) - 1);
+								num_val_signal <= std_logic_vector(unsigned(num_val_signal) - 1);
 							end if;
 						when others =>
 						  inner_p_t <= inner_p_t;
@@ -293,7 +294,7 @@ begin
 					btnl_state <= press_wait;
 				end if;
             when others =>
-              inner_p_t <= inner_p_t;
+              btnl_state <= press_wait;
 		end case;
 		
 		case (btnr_state) is
@@ -322,7 +323,7 @@ begin
 					btnr_state <= press_wait;
 				end if;
             when others =>
-              inner_p_t <= inner_p_t;
+              btnr_state <= press_wait;
 		end case;
 		
 		case (btnu_state) is
@@ -351,7 +352,7 @@ begin
 					btnu_state <= press_wait;
 				end if;
             when others =>
-              inner_p_t <= inner_p_t;
+              btnu_state <= press_wait;
 		end case;
 		
 		case (btnd_state) is
@@ -380,17 +381,18 @@ begin
 					btnd_state <= press_wait;
 				end if;
             when others =>
-              inner_p_t <= inner_p_t;
+              btnd_state <= press_wait;
 		end case;
+		
+      -- output number value from signal
+      num_val <= num_val_signal;
+      -- returing set values in menu back to top to save them
+      l_t_o <= inner_l_t;
+      p_t_o <= inner_p_t;
+      laps_o <= inner_laps;
+      bl_vect <= blicking_vector;
     end if;
-  end process p_btn;
   
-  -- output number value from signal
-  num_val <= num_val_signal;
-  -- returing set values in menu back to top to save them
-  l_t_o <= inner_l_t;
-  p_t_o <= inner_p_t;
-  laps_o <= inner_laps;
-  bl_vect <= blicking_vector;
+  end process p_btn;
 
 end architecture behavioral;

@@ -171,7 +171,6 @@ begin
 
       end case;
 
-      end if;
     end if;
 
   end process p_mux;

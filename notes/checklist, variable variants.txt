@@ -1,15 +1,14 @@
 ﻿CHECKLIST:
-	driver_7seg_8digits.vhd
-		line 128, 176
-			spíš aby nesvítilo nic ??
-	value_to_digits.vhd
-		
-	blicker.vhd
-		je ok problikávání + pozice ? + time display dp ?
 	menu_driver.vhd
-		DEBUG
-	display_driver.vhd
 		nezobrazuje se nastavená hodnota (+ top.vhd)
+		??reset btnc pro vynulování nebo default hodnoty
+	timer_driver.vhd
+		nefunguje (viz video record)
+		pause implementace ??
+		if (enable 0)
+			default values, state <= stop
+	top.vhd
+		default hodnoty pro timer_driver.vhd i menu_driver.vhd
 
 
 
@@ -28,21 +27,7 @@ SIMULATION - IMPLEMENTATION VALUES:
 			treshold pro stisk tlačítka
 
 
-
-TO DO:
-	vymyslet "state repeater" pro TIMER DRIVER
-		možná nevyužít counter.vhd a implementovat ho do driveru ?
-
-	timer_driver.vhd
-		- timer_driver itself
-		- implementace do top.vhd
-	
-	top.vhd
-		+ top itself
-		- implementace timer_driver
-		- implementace SW pro přepínání do menu
-		- implementace START/(STOP nebo PAUSE) ?
-	
+TO DO:	
 	TESTBENCHE
 
 
