@@ -24,8 +24,7 @@ SIMULATION - IMPLEMENTATION VALUES:
 			treshold pro stisk tlačítka
 
 
-TO DO:	
-	počáteční a defualtní hodnoty (top, timer_drive, menu_driver)
+TO DO:
 	TESTBENCHE
 	dokumentace
 

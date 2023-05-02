@@ -384,15 +384,16 @@ begin
               btnd_state <= press_wait;
 		end case;
 		
-      -- output number value from signal
-      num_val <= num_val_signal;
-      -- returing set values in menu back to top to save them
-      l_t_o <= inner_l_t;
-      p_t_o <= inner_p_t;
-      laps_o <= inner_laps;
-      bl_vect <= blicking_vector;
     end if;
   
   end process p_btn;
+	
+  -- output number value from signal
+  num_val <= num_val_signal;
+  bl_vect <= blicking_vector;
+  -- returing set values in menu back to top to save them
+  l_t_o <= inner_l_t;
+  p_t_o <= inner_p_t;
+  laps_o <= inner_laps;
 
 end architecture behavioral;

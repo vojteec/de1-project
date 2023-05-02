@@ -168,12 +168,9 @@ begin
 					btnc_state <= press_wait;
 		end case;
 	
-  
-       -- output values from signal
-       num_val <= std_logic_vector(to_unsigned(inner_clock, 10));
-       lap_n <= inner_laps;
-       bl_vect <= blicking_vector;
-	
+		-- output value
+		num_val <= std_logic_vector(to_unsigned(inner_clock, 10));
+   
 	-- RESETTING ALL SIGNALS
 	elsif (enable = '0') then
 		btnc_state <= press_wait;
@@ -186,5 +183,9 @@ begin
   
     end if;
   end process p_btn;
+	
+   -- output values from signal
+   lap_n <= inner_laps;
+   bl_vect <= blicking_vector;
 
 end architecture behavioral;
