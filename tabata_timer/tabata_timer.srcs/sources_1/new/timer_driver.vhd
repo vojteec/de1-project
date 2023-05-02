@@ -69,7 +69,7 @@ begin
 		g_MAX	=> 100000000, -- 1 second
 		clk		=> clk,
 		rst		=> '0',
-		ce		=> clock_enable_signal,
+		ce		=> clock_enable_signal
 	);
 	
 	  
