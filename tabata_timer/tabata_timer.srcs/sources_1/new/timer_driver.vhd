@@ -44,7 +44,7 @@ architecture behavioral of timer_driver is
   signal current_state : timer_state := stop;
 -- signals of menu values
   signal inner_clock : integer := l_t;
-  signal inner_laps : integer := laps;
+  signal inner_laps : integer := 1;
   
   signal blicking_vector : std_logic_vector(7 downto 0) := "00000000";
   
@@ -60,8 +60,19 @@ architecture behavioral of timer_driver is
   constant debounce_treshold : integer := 1000000;
   -- 1000000 for 100 MHz clock signal equals 0,01 sec
   
+  signal clock_enable_signal : std_logic := '0';
+  
 begin
-
+	
+  clock_enable : entity work.clock_enable
+	  port map (
+		g_MAX	=> 100000000, -- 1 second
+		clk		=> clk,
+		rst		=> '0',
+		ce		=> clock_enable_signal,
+	);
+	
+	  
   -- PROCESS MANAGING LEFT BTN FUNCTIONALITY
   p_btn : process (clk) is
   begin
@@ -72,56 +83,56 @@ begin
 		  case (current_state) is
 		      when stop => -- starting new timer
 		          current_state <= lap;
-		      when lap => -- resetting timer /same as when pause
-		          current_state <= stop;
-		      when pause => -- resetting timer /same as when lap
-		          current_state <= stop;
-		      when others =>
+		      when others => -- stopping the timer
 		          current_state <= stop;
 		  end case;
 		end if;
 		
-		-- TIMER CLOCK ITSELF
-		case (current_state) is
-		  when stop =>
-		      lap_n <= 1;
-              bl_vect <= (others => '0');
-              sel_st <= 1;
-              num_val <= std_logic_vector(to_unsigned(l_t, 10));
-          when lap =>
-              -- END OF TIMER
-              if (inner_laps = laps AND inner_clock = 0) then
-                current_state <= stop;
-              
-              -- END OF LAP
-              elsif(inner_clock = 0) then
-                inner_clock <= p_t;
-                current_state <= pause;              
-              
-              else
-                -- IF CONTINUING
+		-- TIMER CLOCK ITSELF (clock enable has 1 second period)
+		if(clock_enable_signal = '1') then
+		  case (current_state) is
+		    when stop =>
+		        inner_laps <= 1;
+                blicking_vector <= (others => '0');
                 sel_st <= 1;
-                inner_clock <= inner_clock - 1;
-                bl_vect <= (others => '1');
-                
-              end if;
-              
-          when pause =>
-              -- END OF PAUSE
-              if(inner_clock = 0) then
                 inner_clock <= l_t;
-                current_state <= lap;
+
+            when lap =>
+                -- END OF TIMER
+                if (inner_laps = laps AND inner_clock = 0) then
+                  current_state <= stop;
                 
-              else
-                sel_st <= 2;
-                inner_clock <= inner_clock - 1;
-                bl_vect <= (others => '1');
-              
-              end if;
-              
-          when others =>
-              current_state <= stop;
-		end case;
+                -- END OF LAP
+                elsif(inner_clock = 0) then
+                  inner_clock <= p_t;
+                  sel_st <= 2;
+                  current_state <= pause;              
+                
+                else
+                  -- IF CONTINUING
+                  inner_clock <= inner_clock - 1;
+                  blicking_vector <= (others => '1');
+                  
+                end if;
+                
+            when pause =>
+                -- END OF PAUSE
+                if(inner_clock = 0) then
+                  inner_clock <= l_t;
+				  inner_laps <= inner_laps + 1;
+				  sel_st <= 1;
+                  current_state <= lap;
+                  
+                else
+                  inner_clock <= inner_clock - 1;
+                  blicking_vector <= (others => '1');
+                
+                end if;
+                
+            when others =>
+                current_state <= stop;
+		  end case;
+		end if;
 		
 		
 	-- BUTTON DEBOUNCING
@@ -158,11 +169,21 @@ begin
 		end case;
 	
   
-       -- output number value from signal
+       -- output values from signal
        num_val <= std_logic_vector(to_unsigned(inner_clock, 10));
        lap_n <= inner_laps;
-       -- returing set values in menu back to top to save them
        bl_vect <= blicking_vector;
+	
+	-- RESETTING ALL SIGNALS
+	elsif (enable = '0') then
+		btnc_state <= press_wait;
+		current_state <= stop;
+        inner_clock <= l_t;
+        inner_laps <= 1;
+        blicking_vector <= (others => '0');
+        btnc_debounce_counter <= 0;
+        btnc_pressed <= '0';
+  
     end if;
   end process p_btn;
 

@@ -1,14 +1,8 @@
 ﻿CHECKLIST:
 	menu_driver.vhd
-		nezobrazuje se nastavená hodnota (+ top.vhd)
-		??reset btnc pro vynulování nebo default hodnoty
+		?? reset btnc pro vynulování nebo default hodnoty
 	timer_driver.vhd
-		nefunguje (viz video record)
-		pause implementace ??
-		if (enable 0)
-			default values, state <= stop
-	top.vhd
-		default hodnoty pro timer_driver.vhd i menu_driver.vhd
+		?? pause implementace
 
 
 
@@ -25,10 +19,15 @@ SIMULATION - IMPLEMENTATION VALUES:
 	menu_driver.vhd
 		line 75
 			treshold pro stisk tlačítka
+	timer_driver.vhd
+		line 60
+			treshold pro stisk tlačítka
 
 
 TO DO:	
+	počáteční a defualtní hodnoty (top, timer_drive, menu_driver)
 	TESTBENCHE
+	dokumentace
 
 
 
