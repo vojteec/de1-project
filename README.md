@@ -22,7 +22,13 @@ Projekt je řešen instanciováním různých součástek v rámci větších ce
   
   TIMER DRIVER: Součástka obsahuje šest vstupů: enable (pro aktivaci), clock (synchronizační hodinový signál), lap_time (čas kola), pause_time (čas pauzy), laps (počet kol), btnc (tlačítko pro restart). Zároveň obsahuje pět výstupů: lap_number (aktuální čislo kola), blicking_vector (vektor kurzoru blikání), select_state (kolo/pauza), num_val (hodnota času v sekundách) a value_type (bit, určující čas nebo obyčejnou číselnou hodnotu). V rámci součástky je využita instance clock_enable s periodou 1 sekunda. Dále je implementována logika pro pauzu i reset a pro samotný časovač a jeho chování při kolech, pauze a na konci odpočtu. Jako i na více místech v projektu je zde řešen button debouncing – ošetření pro provedení pouze jedné akce při jednom zmáčknutí tlačítka, tedy nastavení časového prahu, do kterého nebude přijímán nový impuls z tlačítka.
   
-  MENU DRIVER: Součástka obsahuje devět vstupů: enable (pro aktivaci), clock (synchronizovaný hodinový signál), lap_time (čas kola), pause_time (čas pauzy), laps (počet kol), btnl, btnr, btnu a btnd (vstup z levého, pravého, horního a dolního tlačítka). Zároveň obsahuje sedm výstupů: blinking_vector (vektor kurzoru blikání), select_state (čas kola, čas pauzy, počet kol), num_val (hodnota času/počtu kol), value_type (bit, určující čas nebo obyčejnou číselnou hodnotu), lap_time_out (nastavená hodnota času kola), pause_time_out (nastavená hodnota času pauzy) a laps_o (nastavený počet kol).
+  MENU DRIVER: Součástka obsahuje devět vstupů: enable (pro aktivaci), clock (synchronizovaný hodinový signál), lap_time (čas kola), pause_time (čas pauzy), laps (počet kol), btnl, btnr, btnu a btnd (vstup z levého, pravého, horního a dolního tlačítka). Zároveň obsahuje sedm výstupů: blinking_vector (vektor kurzoru blikání), select_state (čas kola, čas pauzy, počet kol), num_val (hodnota času/počtu kol), value_type (bit, určující čas nebo obyčejnou číselnou hodnotu), lap_time_out (nastavená hodnota času kola), pause_time_out (nastavená hodnota času pauzy) a laps_o (nastavený počet kol). V součástce je vyřešena logika zajišťující správnou odezvu čtyř tlačítek a také jejich button debouncing.
+  
+  STATE->DIGITS: 
+  
+  VALUE->DIGITS: 
+  
+  BLICKER: 
 
 ### Popis programového vybavení řešení
 
