@@ -14,7 +14,7 @@ Implementace návrhu je plánována pro FPGA desku Nexys A7-50T, která nám nab
 
 ### Technický popis a schéma návrhu
 
-![schéma návrhu](img/schematic.png)
+![schéma návrhu](img/schematic.PNG)
 
 ### Popis programového vybavení řešení
 
