@@ -24,9 +24,9 @@ Projekt je řešen instanciováním různých součástek v rámci větších ce
   
   MENU DRIVER: Součástka obsahuje devět vstupů: enable (pro aktivaci), clock (synchronizovaný hodinový signál), lap_time (čas kola), pause_time (čas pauzy), laps (počet kol), btnl, btnr, btnu a btnd (vstup z levého, pravého, horního a dolního tlačítka). Zároveň obsahuje sedm výstupů: blinking_vector (vektor kurzoru blikání), select_state (čas kola, čas pauzy, počet kol), num_val (hodnota času/počtu kol), value_type (bit, určující čas nebo obyčejnou číselnou hodnotu), lap_time_out (nastavená hodnota času kola), pause_time_out (nastavená hodnota času pauzy) a laps_o (nastavený počet kol). V součástce je vyřešena logika (procesy) zajišťující správnou odezvu čtyř tlačítek a také jejich button debouncing.
   
-  STATE->DIGITS: Součástka má dva vstupy: lap_number (aktuální číslo kola/pauzy), state (aktuální stav). Zároveň má čtyři výstupy pro první čtyři sedmisegmentovky: dig7-4. V rámci součástky jsou řešeny převody ze vstupních údajů o stavu a čísla na zobrazení konkrétních hodnot na sedmisegmentovkách. Následně jsou tato data ve formátu BCD odeslána na převodník z BCD pro sedmisegmentovku a na driver pro osmičíslicový sedmisegmentový displej.
+  STATE->DIGITS: Součástka má dva vstupy: lap_number (aktuální číslo kola/pauzy), state (aktuální stav). Zároveň má čtyři výstupy pro první čtyři sedmisegmentovky: dig7-4. V rámci součástky jsou řešeny převody ze vstupních údajů o stavu a čísla na zobrazení konkrétních hodnot na sedmisegmentovkách. Následně jsou tato data ve formátu čtyřbitového BCD odeslána na převodník z BCD pro sedmisegmentovku a na driver pro osmičíslicový sedmisegmentový displej.
   
-  VALUE->DIGITS: 
+  VALUE->DIGITS: Součástka má dva vstupy: value_type (bit, určující čas nebo číselnou hodnotu) a value (hodnota). Zároveň má pět výstupů pro poslední čtyři sedmisegmentovky dig3-0 a dp_vect (vektor, určující, které desetinné tečky budou svítit). V rámci součástky je logika (procesy), která přepočítává čas v sekundách a zobrazuje čas v minutách a sekundách na sedmisegmentových displejích. Data jsou opět v čtyřbitovém BCD odeslána na převodník a zobrazena pomocí driveru na displeji.
   
   BLICKER: 
 
