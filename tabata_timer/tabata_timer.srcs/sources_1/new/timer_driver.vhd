@@ -65,8 +65,11 @@ architecture behavioral of timer_driver is
 begin
 	
   clock_enable : entity work.clock_enable
+	  generic map (
+	    g_MAX => 100000000 -- @ 1 s IMPLEMENTATION
+	    --g_MAX => 4       -- @ 4 ns SIMULATION
+	  )
 	  port map (
-		g_MAX	=> 100000000, -- 1 second
 		clk		=> clk,
 		rst		=> '0',
 		ce		=> clock_enable_signal
