@@ -32,7 +32,9 @@ Projekt je řešen instanciováním různých součástek v rámci větších ce
 
 ### Popis programového vybavení řešení
 
+Všechny výše uvedené součástky nejsou fyzické, jejich funkce je naprogramovaná v jazyce VHDL a implementovaná na FPGA desku Nexys A7-50T. Celá aplikace byla vyvjíená ve Vivadu a v EDA Playground. Jednotlivé součástky i celky byly sdruženy do složek pro snadnější orientaci. Counter (clock_enable.vhd, counter.vhd), display_driver (blicker.vhd, driver_7seg_8digits.vhd, hex_7seg.vhd), value_converters (state_to_digits.vhd, value_to_digits.vhd) a volně umístěné display_driver.vhd, menu_driver.vhd, mode_switch.vhd, timer_driver.vhd a top.vhd. Hierarchie designových souborů ve Vivadu je znázorněná na následujícím obrázku.
 
+![hierarchie souborů ve Vivadu](img/hierarchy.png)
 
 ### Uživatelská příručka a návod k použití
 
