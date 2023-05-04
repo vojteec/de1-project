@@ -28,7 +28,7 @@ Projekt je řešen instanciováním různých součástek v rámci větších ce
   
   VALUE->DIGITS: Součástka má dva vstupy: value_type (bit, určující čas nebo číselnou hodnotu) a value (hodnota). Zároveň má pět výstupů pro poslední čtyři sedmisegmentovky dig3-0 a dp_vect (vektor, určující, které desetinné tečky budou svítit). V rámci součástky je logika (procesy), která přepočítává čas v sekundách a zobrazuje čas v minutách a sekundách na sedmisegmentových displejích. Data jsou opět v čtyřbitovém BCD odeslána na převodník a zobrazena pomocí driveru na displeji.
   
-  BLICKER: 
+  BLICKER: Součástka má jedenáct vstupů: clock (synchronizovaný hodinový signál), blinking_vector (vektor kurzoru blikání) a osm vstupů pro jednotlivé sedmisegmentovky data0-7_in spolu s vektorem desetinné tečky. Zároveň má devět výstupů: data0-7_out pro jednotlivé sedmisegmentovky a dp_vect_out jako vektor desetinné tečky. V rámci součástky je využita další instance clock_enable s periodou 0,5 s. Dále je v součástce vyřešena logika, určující, která část displeje bude problikávat.
 
 ### Popis programového vybavení řešení
 
