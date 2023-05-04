@@ -78,7 +78,7 @@ begin
 	  
   -- PROCESS MANAGING LEFT BTN FUNCTIONALITY
   p_btn : process (clk) is
-  begin
+  begin   
     if (rising_edge(clk) AND enable = '1') then
     
 		-- START / STOP BUTTON ACTIONS
@@ -173,9 +173,10 @@ begin
 	
 		-- output value
 		num_val <= std_logic_vector(to_unsigned(inner_clock, 10));
-   
-	-- RESETTING ALL SIGNALS
-	elsif (enable = '0') then
+  
+    end if;
+    
+    if (enable = '0') then
 		btnc_state <= press_wait;
 		current_state <= stop;
         inner_clock <= l_t;

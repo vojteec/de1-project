@@ -63,7 +63,7 @@ begin
 p_switch : process (switch_button) is
   begin
             -- MENU
-    if (switch_button = '1') then
+    if (switch_button = '0') then
         bl_vect_signal <= menu_bl_vect;
         sel_st_signal <= menu_sel_st;
         num_val_signal <= menu_num_val;
